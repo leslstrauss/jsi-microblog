@@ -13,12 +13,13 @@ JsiMicroblog.ApplicationAdapter = DS.RESTAdapter.extend({
 // expose JsiMicroblog globally
 window.JsiMicroblog = JsiMicroblog;
 
+// define routes
 JsiMicroblog.Router.map(function() {
   this.route('signIn');
   this.route('signUp');
 });
 
-//extending routes
+// extend routes
 JsiMicroblog.SignInRoute = Ember.Route.extend({
   actions: {
     signIn: function() {
