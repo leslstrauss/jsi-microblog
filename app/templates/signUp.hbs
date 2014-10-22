@@ -1,0 +1,14 @@
+<h1>Hello</h1>
+
+<form {{action 'signUp' on='submit'}}>
+  <p>
+    <label>{{input type='text' size='50' placeholder='What is your name?' value=newUserName}}
+    </label>
+  </p>
+
+  <p>
+    <label>{{input type='text' size='50' placeholder='What is your password?' value=newUserPassword}}
+    </label>
+  </p>
+  <input {{action 'signUp'}} type='submit' value='signUp'>
+</form>
