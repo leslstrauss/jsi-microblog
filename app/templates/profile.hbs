@@ -1,6 +1,6 @@
 <h1>Welcome to your very own microblog.</h1>
 <h2>Add New Post</h2>
  <form {{action 'createPost' on='submit'}}>
-   <p><label>{{input type='text' value=post}}</label></p>
-   <input type='submit'>
+   <p><label>{{input type='text' class='post' value=postBody}}</label></p>
+   <input type='submit' class='submit'>
  </form>

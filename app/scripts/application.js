@@ -82,18 +82,6 @@ App.SignupRoute = Ember.Route.extend({
   }
 });
 
-// TODO: Define some actions for creating new microblog posts.
-
-// App.Post = DS.Model.extend({
-//   post: DS.attr('string')
-// });
-
-// App.ProfileRoute = Ember.Route.extend({
-//   model: function() {
-//     return this.store.find('post');
-//   }
-// });
-
 App.SignupController = Ember.ObjectController.extend({
   actions: {
     signup: function() {
@@ -110,6 +98,30 @@ App.SignupController = Ember.ObjectController.extend({
         if (error.responseJSON) { error = error.responseJSON; }
         if (error.error) { error = error.error; }
         self.set('error', error);
+      });
+    }
+  }
+});
+
+// TODO: Define some actions for creating new microblog posts.
+
+App.Post = DS.Model.extend({
+  post: DS.attr('string')
+});
+
+App.ProfileController = Ember.Controller.extend({
+  actions: {
+    createPost: function() {
+      var post = this.store.createRecord('post', {
+        post: this.get('postBody')
+      });
+      post.save().then(function() {
+        console.log(post.get('post'));
+        // what to do when the post was successfully saved
+      })
+      .catch(function() {
+        console.log('post was not created');
+        // what to do when saving the post failed.
       });
     }
   }
