@@ -5,9 +5,6 @@ describe('app', function() {
     App.reset();
   });
 
-  it('has one passing test', function() {});
-  it('will have more tests');
-
   describe('when logged in', function() {
     beforeEach(function() {
       var container = applicationContainer();
@@ -21,6 +18,13 @@ describe('app', function() {
     it('#profile', function() {
       visit('/profile');
       expect(currentRouteName()).to.eql('profile');
+    });
+
+    it('#profile', function() {
+      visit('/profile')
+      andThen(function() {
+        expect(find('input').length).to.eql(2);
+      });
     });
   });
 });

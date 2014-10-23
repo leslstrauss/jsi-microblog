@@ -19,6 +19,8 @@
   "smarttabs": true,
   "globals": {
     "JsiMicroblog": true,
+    "App": true,
+    "applicationContainer": true,
     "Ember": true,
     "DS": true,
 
