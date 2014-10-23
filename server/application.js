@@ -9,6 +9,10 @@ var compression = require('compression');
 var favicon = require('serve-favicon');
 var config = require('./config');
 
+var knexConfig = require('../knexfile.js')[config.env];
+var knex = require('knex')(knexConfig);
+var bookshelf = require('bookshelf')(knex);
+
 var app = express();
 var resources = express();
 resources.use(express.static(config.public));
@@ -29,6 +33,26 @@ if (config.env === 'production') {
 app.use(bodyParser.json());
 app.use(methodOverride());
 
+var User, Token;
+User = bookshelf.Model.extend({
+  tokens: function() {
+    return this.hasMany(Token);
+  },
+  tableName: 'users'
+});
+Token = bookshelf.Model.extend({
+  user: function() {
+    return this.belongsTo(User);
+  },
+  tableName: 'tokens'
+});
+
+
+// TODO: How do we get this working properly??
+var admit = require('admit-one')('bookshelf', {
+  bookshelf: { modelClass: User }
+});
+
 // api routes
 var api = express.Router();
 api.get('/example', function(req, res) {
@@ -36,7 +60,7 @@ api.get('/example', function(req, res) {
 });
 
 // single-page app routes
-app.use('/api/v1', api);
+app.use('/api', api);
 app.get('/*', function(req, res, next) {
   req.url = '/index.html';
   next();
