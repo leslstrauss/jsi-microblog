@@ -80,6 +80,12 @@ App.SignupRoute = Ember.Route.extend({
   }
 });
 
+// TODO: Define some actions for creating new microblog posts.
+
+App.ProfileRoute = Ember.Route.extend({
+
+})
+
 App.SignupController = Ember.ObjectController.extend({
   actions: {
     signup: function() {

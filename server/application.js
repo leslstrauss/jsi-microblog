@@ -47,8 +47,6 @@ Token = bookshelf.Model.extend({
   tableName: 'tokens'
 });
 
-
-// TODO: How do we get this working properly??
 var admit = require('admit-one')('bookshelf', {
   bookshelf: { modelClass: User }
 });
@@ -57,6 +55,24 @@ var admit = require('admit-one')('bookshelf', {
 var api = express.Router();
 api.get('/example', function(req, res) {
   res.json({});
+});
+
+api.post('/users', admit.create, function(req, res) {
+  // user representations accessible via
+  // req.auth.user & req.auth.db.user
+  res.json({ user: req.auth.user });
+});
+
+api.post('/sessions', admit.authenticate, function(req, res) {
+  // user accessible via req.auth
+  res.json({ session: req.auth.user });
+});
+
+// all routes defined below this line will require authorization
+api.use(admit.authorize);
+api.delete('/sessions/current', admit.invalidate, function(req, res) {
+  if (req.auth.user) { throw new Error('Session not invalidated.'); }
+  res.json({ status: 'ok' });
 });
 
 // single-page app routes
