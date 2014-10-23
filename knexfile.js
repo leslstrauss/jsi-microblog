@@ -14,6 +14,11 @@ module.exports = {
     connection: connection
   },
 
+  test: {
+    client: 'postgres',
+    connection: connection
+  },
+
   staging: {
     client: 'postgresql',
     connection: connection,
