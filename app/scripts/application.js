@@ -1,7 +1,12 @@
 'use strict';
 
 var JsiMicroblog = Ember.Application.create();
-Ember.AdmitOne.setup();
+// expose JsiMicroblog globally
+window.JsiMicroblog = JsiMicroblog;
+var App = window.App = JsiMicroblog;
+
+App.AdmitOneContainers = {}; // overridable by tests
+Ember.AdmitOne.setup({ containers: App.AdmitOneContainers });
 
 JsiMicroblog.Router.reopen({
   location: 'history'
@@ -11,9 +16,6 @@ JsiMicroblog.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api'
 });
 
-// expose JsiMicroblog globally
-window.JsiMicroblog = JsiMicroblog;
-var App = JsiMicroblog;
 
 App.Router.map(function() {
   this.route('signup');
@@ -82,9 +84,15 @@ App.SignupRoute = Ember.Route.extend({
 
 // TODO: Define some actions for creating new microblog posts.
 
-App.ProfileRoute = Ember.Route.extend({
+// App.Post = DS.Model.extend({
+//   post: DS.attr('string')
+// });
 
-})
+// App.ProfileRoute = Ember.Route.extend({
+//   model: function() {
+//     return this.store.find('post');
+//   }
+// });
 
 App.SignupController = Ember.ObjectController.extend({
   actions: {
